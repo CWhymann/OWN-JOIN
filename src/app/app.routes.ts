@@ -4,8 +4,7 @@ import { Login } from './components/login/login';
 import { Summary } from './components/summary/summary';
 import { AddTask } from './components/add-task/add-task';
 import { Board } from './components/board/board';
-import { ContactList } from './components/contacts/contact-list/contact-list';
-
+import { Contacts } from './components/contacts/contacts';
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
@@ -16,7 +15,7 @@ export const routes: Routes = [
       { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
       { path: 'board', component: Board },
-      { path: 'contacts', component: ContactList },
+      { path: 'contacts', component: Contacts },
     ],
   },
 ];

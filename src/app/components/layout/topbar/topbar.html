@@ -1,1 +1,8 @@
-<p>topbar works!</p>
+<header class="topbar">
+  <span class="topbar__title">{{ title() }}</span>
+
+  <div class="topbar__actions">
+    <button class="topbar__help" aria-label="Hilfe">?</button>
+    <span class="topbar__avatar">{{ userInitials() }}</span>
+  </div>
+</header>

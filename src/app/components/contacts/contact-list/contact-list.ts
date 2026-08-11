@@ -1,7 +1,8 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Contact } from '../../../core/models/contact';
 import { getAvatarColor } from '../../../core/utils/avatar-color.util';
+import { ContactsService } from '../../../core/services/contacts.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -11,14 +12,12 @@ import { getAvatarColor } from '../../../core/utils/avatar-color.util';
   styleUrl: './contact-list.scss',
 })
 export class ContactList {
-  contacts = signal<Contact[]>([
-    { id: '1', name: 'Anton Mayer', email: 'anton@gmail.com', phone: '+49 111', avatarColor: '' },
-    { id: '2', name: 'Anja Schulz', email: 'anja@gmail.com', phone: '+49 222', avatarColor: '' },
-    { id: '3', name: 'Tatjana Wolf', email: 'wolf@gmail.com', phone: '+49 333', avatarColor: '' },
-  ]);
+  private contactsService = inject(ContactsService);
 
   groupedContacts = computed(() => {
-    const sorted = [...this.contacts()].sort((a, b) => a.name.localeCompare(b.name));
+    const sorted = [...this.contactsService.contacts()].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
     const groups = new Map<string, Contact[]>();
 
     for (const contact of sorted) {
@@ -32,6 +31,8 @@ export class ContactList {
     return groups;
   });
 
+  selectedId = computed(() => this.contactsService.selectedContact()?.id);
+
   getInitials(name: string): string {
     return name
       .split(' ')
@@ -42,5 +43,9 @@ export class ContactList {
 
   getColor(name: string): string {
     return getAvatarColor(name);
+  }
+
+  onSelect(contact: Contact): void {
+    this.contactsService.selectContact(contact);
   }
 }

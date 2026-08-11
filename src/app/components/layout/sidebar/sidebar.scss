@@ -5,7 +5,7 @@
   flex-direction: column;
   width: $sidebar-width;
   height: 100vh;
-  background-color: $color-bg-elevated;
+  background-color: $color-sidebar-bg;
   padding: $spacing-lg $spacing-md;
 
   &__logo {
@@ -44,8 +44,8 @@
     }
 
     &.active {
-      color: $color-accent;
-      background-color: rgba($color-accent, 0.15);
+      color: $color-text;
+      background-color: $color-sidebar-active;
     }
   }
 
