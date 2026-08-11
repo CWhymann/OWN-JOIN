@@ -1,0 +1,67 @@
+@use '../../../../styles/abstracts' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  height: 100vh;
+  background-color: $color-bg-elevated;
+  padding: $spacing-lg $spacing-md;
+
+  &__logo {
+    margin-bottom: $spacing-xl;
+
+    img {
+      height: 40px;
+    }
+  }
+
+  &__logo-text {
+    font-family: $font-headline;
+    font-weight: $font-weight-bold;
+    font-size: 24px;
+    color: $color-accent;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    flex: 1;
+  }
+
+  &__link {
+    color: $color-text-muted;
+    text-decoration: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 8px;
+    font-family: $font-headline;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-text;
+      background-color: rgba($color-accent, 0.1);
+    }
+
+    &.active {
+      color: $color-accent;
+      background-color: rgba($color-accent, 0.15);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__footer-link {
+    color: $color-text-muted;
+    font-size: 12px;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+}

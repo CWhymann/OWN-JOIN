@@ -1,0 +1,19 @@
+<div class="contact-list">
+  @for (group of groupedContacts() | keyvalue; track group.key) {
+    <div class="contact-list__group">
+      <span class="contact-list__letter">{{ group.key }}</span>
+
+      @for (contact of group.value; track contact.id) {
+        <div class="contact-list__item">
+          <span class="contact-list__avatar" [style.background-color]="getColor(contact.name)">
+            {{ getInitials(contact.name) }}
+          </span>
+          <div class="contact-list__info">
+            <span class="contact-list__name">{{ contact.name }}</span>
+            <span class="contact-list__email">{{ contact.email }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
