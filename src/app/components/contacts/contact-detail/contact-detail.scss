@@ -1,85 +1,210 @@
 @use '../../../../styles/abstracts' as *;
+@use '../../../../styles/abstracts/confirm-dialog' as *;
 
 .contact-detail {
-  padding: $spacing-lg;
+    padding: clamp(16px, 2.5vw, 24px);
+    position: relative;
+    background-color: $color-bg;
 
-  &--empty {
-    color: #888;
-    font-style: italic;
-  }
+    &:not(.contact-detail--empty) {
+        animation: contact-detail-slide-in 300ms cubic-bezier(0, 0, 0.58, 1);
 
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: $spacing-lg;
-    margin-bottom: $spacing-xl;
-  }
-
-  &__avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    color: $color-text;
-    font-weight: $font-weight-bold;
-    font-size: 24px;
-    flex-shrink: 0;
-    border: 3px solid #ffffff;
-  }
-
-  &__name {
-    font-family: $font-headline;
-    font-weight: $font-weight-bold;
-    font-size: 24px;
-    color: #2a2e3f;
-    margin-bottom: $spacing-sm;
-  }
-
-  &__actions {
-    display: flex;
-    gap: $spacing-md;
-  }
-
-  &__action {
-    background: none;
-    border: none;
-    color: #888;
-    cursor: pointer;
-    font-family: $font-body;
-    font-size: 13px;
-    transition: $transition-fast;
-
-    &:hover {
-      color: $color-accent-dark;
+        @include mobile {
+            animation: none;
+        }
     }
-  }
 
-  &__section-title {
-    font-family: $font-headline;
-    font-weight: $font-weight-bold;
-    color: #2a2e3f;
-    margin-bottom: $spacing-md;
-  }
-
-  &__field {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-xs;
-    margin-bottom: $spacing-md;
-  }
-
-  &__label {
-    font-size: 12px;
-    color: #888;
-  }
-
-  &__value {
-    color: #2a2e3f;
-
-    &--accent {
-      color: $color-accent-dark;
+    &--empty {
+        color: $color-text-muted;
+        font-style: italic;
     }
-  }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 2.5vw, 24px);
+        margin-bottom: clamp(24px, 3.5vw, 32px);
+    }
+
+    &__avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: clamp(80px, 8vw, 120px);
+        height: clamp(80px, 8vw, 120px);
+        border-radius: 50%;
+        color: #ffffff;
+        font-weight: $font-weight-semibold;
+        font-size: clamp(27px, 3vw, 47px);
+        flex-shrink: 0;
+        border: 3px solid #ffffff;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+
+        @include mobile {
+            font-weight: $font-weight-regular;
+        }
+    }
+
+    &__info {
+        min-width: 0;
+    }
+
+    &__name {
+        font-family: $font-primary;
+        font-weight: $font-weight-semibold;
+        font-size: clamp(36px, 4vw, 47px);
+        color: $color-text;
+        margin-bottom: $spacing-sm;
+        overflow-wrap: anywhere;
+
+        @include mobile {
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: $spacing-md;
+
+        @include mobile {
+            display: none;
+        }
+    }
+
+    &__action {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        background: none;
+        border: unset;
+        color: $color-text-muted;
+        cursor: pointer;
+        font-family: $font-primary;
+        font-size: 16px;
+        transition: $transition-fast;
+
+        &:hover {
+            color: $color-accent;
+        }
+    }
+
+    &__action-icon {
+        width: clamp(14px, 1.2vw, 16px);
+        height: clamp(14px, 1.2vw, 16px);
+    }
+
+    &__section-title {
+        font-family: $font-primary;
+        font-weight: $font-weight-regular;
+        font-size: clamp(17px, 1.5vw, 20px);
+        color: $color-text;
+        margin-bottom: $spacing-md;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-md;
+    }
+
+    &__label {
+        font-size: 16px;
+        font-weight: $font-weight-bold;
+        color: #000000;
+    }
+
+    &__value {
+        color: $color-text;
+        overflow-wrap: anywhere;
+
+        &--accent {
+            color: $color-accent;
+        }
+    }
+
+    &__fab {
+        display: none;
+
+        @include mobile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            bottom: 90px;
+            right: $spacing-lg;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: none;
+            z-index: 50;
+
+            img {
+                width: 56px;
+                height: 56px;
+            }
+        }
+    }
+
+    &__menu {
+        display: none;
+
+        @include mobile {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            bottom: 150px;
+            right: $spacing-lg;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            z-index: 60;
+        }
+    }
+
+    &__menu-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        padding: $spacing-md $spacing-lg;
+        background: none;
+        border: unset;
+        cursor: pointer;
+        font-family: $font-primary;
+        color: $color-text;
+        white-space: nowrap;
+
+        &:first-child {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        &:last-child {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        img {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+
+    @include confirm-dialog;
+}
+
+@keyframes contact-detail-slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }

@@ -1,8 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, effect, ElementRef, inject, input, output, viewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Contact } from '../../../core/models/contact';
-import { getAvatarColor } from '../../../core/utils/avatar-color.util';
+import { Contact } from '../../../core/models/contact.model';
 import { ContactsService } from '../../../core/services/contacts.service';
+import { getInitials } from '../../../core/utils/avatar.utils';
 
 @Component({
   selector: 'app-contact-list',
@@ -14,38 +14,20 @@ import { ContactsService } from '../../../core/services/contacts.service';
 export class ContactList {
   private contactsService = inject(ContactsService);
 
-  groupedContacts = computed(() => {
-    const sorted = [...this.contactsService.contacts()].sort((a, b) =>
-      a.name.localeCompare(b.name),
-    );
-    const groups = new Map<string, Contact[]>();
+  groups = this.contactsService.groups;
+  addClicked = output<void>();
+  contactSelected = output<Contact>();
 
-    for (const contact of sorted) {
-      const letter = contact.name.charAt(0).toUpperCase();
-      if (!groups.has(letter)) {
-        groups.set(letter, []);
-      }
-      groups.get(letter)!.push(contact);
-    }
+  selectedId = input<number | null>(null);
+  private items = viewChildren<ElementRef<HTMLElement>>('item');
 
-    return groups;
-  });
+  getInitials = getInitials;
 
-  selectedId = computed(() => this.contactsService.selectedContact()?.id);
-
-  getInitials(name: string): string {
-    return name
-      .split(' ')
-      .map((part) => part.charAt(0))
-      .join('')
-      .toUpperCase();
-  }
-
-  getColor(name: string): string {
-    return getAvatarColor(name);
-  }
-
-  onSelect(contact: Contact): void {
-    this.contactsService.selectContact(contact);
+  constructor() {
+    effect(() => {
+      const id = this.selectedId();
+      const item = this.items().find((ref) => ref.nativeElement.dataset['id'] === String(id));
+      item?.nativeElement.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
   }
 }

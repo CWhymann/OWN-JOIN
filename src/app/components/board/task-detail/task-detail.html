@@ -1,0 +1,100 @@
+@if (task(); as t) {
+    <div class="task-detail-overlay" (click)="onOverlayClick($event)">
+        <div class="task-detail-card" [class.closing]="isClosing()">
+            <div class="task-detail-header">
+                <span
+                    class="category-badge"
+                    [class.category-technical]="t.category === 'Technical Task'"
+                >
+                    {{ t.category }}
+                </span>
+                <button class="close-btn" type="button" (click)="closeDetail()">✕</button>
+            </div>
+
+            <h2
+                #titleElement
+                class="task-title"
+            >{{ t.title }}</h2>
+
+            <p class="task-description">{{ t.description }}</p>
+
+            <div class="task-meta">
+                <span class="meta-label">Due date:</span>
+                <span class="meta-value">{{ t.dueDate | date: 'dd.MM.yyyy' }}</span>
+            </div>
+
+            <div class="task-meta">
+                <span class="meta-label">Priority:</span>
+                <span class="meta-value priority" [class]="t.priority.toLowerCase()">
+                    {{ t.priority }}
+                    <img
+                        [src]="'icons/prio-' + t.priority.toLowerCase() + '.svg'"
+                        alt=""
+                        class="priority-icon"
+                    />
+                </span>
+            </div>
+
+            <div class="assigned-section">
+                <span class="meta-label">Assigned To:</span>
+                <div class="assigned-list">
+                    @for (contact of t.assignedTo; track contact.name) {
+                        <div class="contact-row">
+                            <span class="avatar" [style.background-color]="contact.color">{{
+                                contact.initials
+                            }}</span>
+                            <span class="contact-name">{{ contact.name }}</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="subtasks-section">
+                <span class="meta-label">Subtasks</span>
+                <div class="subtask-list">
+                    @for (subtask of t.subtasks; track subtask.title; let index = $index) {
+                        <label class="subtask-row">
+                            <input
+                                type="checkbox"
+                                [checked]="subtask.done"
+                                (change)="toggleSubtask(subtask, index)"
+                            />
+                            <span [class.done]="subtask.done">{{ subtask.title }}</span>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="action-btn" (click)="onDelete()">🗑 Delete</button>
+                <span class="divider">|</span>
+                <button type="button" class="action-btn" (click)="onEdit(t)">✎ Edit</button>
+            </div>
+
+            @if (deleteConfirmOpen()) {
+                <div class="task-detail__overlay">
+                    <div class="task-detail__confirm">
+                        <p class="task-detail__confirm-text">
+                            Delete task <strong>{{ t.title }}</strong
+                            >?
+                        </p>
+                        <div class="task-detail__confirm-actions">
+                            <button
+                                class="task-detail__confirm-btn task-detail__confirm-btn--cancel"
+                                (click)="cancelDelete()"
+                            >
+                                No
+                            </button>
+                            <button
+                                class="task-detail__confirm-btn task-detail__confirm-btn--confirm"
+                                (click)="confirmDelete(t)"
+                            >
+                                Yes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

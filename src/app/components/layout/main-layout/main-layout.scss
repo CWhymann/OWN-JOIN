@@ -1,18 +1,15 @@
-@use '../../../../styles/abstracts' as *;
+@use '../../../styles/abstracts' as *;
 
-.main-layout {
-  display: flex;
-  min-height: 100vh;
-
-  &__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__page {
-    flex: 1;
-    max-width: $max-width;
-    padding: $spacing-lg;
-  }
+.main-layout__content {
+    max-width: calc($max-width - $sidebar-width);
+    height: 100dvh;
+    margin-left: $sidebar-width;
+    padding-top: $topbar-height;
+    
+    @include mobile {
+        height: auto;
+        margin-left: 0;
+        padding-top: $mobile-bar-height;
+        padding-bottom: $mobile-bar-height;
+    }
 }

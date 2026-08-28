@@ -1,29 +1,51 @@
-import { Component, inject } from '@angular/core';
+import { Component, input, output, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactsService } from '../../../core/services/contacts.service';
-import { getAvatarColor } from '../../../core/utils/avatar-color.util';
+import { Contact } from '../../../core/models/contact.model';
+import { getInitials } from '../../../core/utils/avatar.utils';
 
 @Component({
-  selector: 'app-contact-detail',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './contact-detail.html',
-  styleUrl: './contact-detail.scss',
+    selector: 'app-contact-detail',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './contact-detail.html',
+    styleUrl: './contact-detail.scss',
 })
 export class ContactDetail {
-  private contactsService = inject(ContactsService);
+    contact = input<Contact | null>(null);
 
-  contact = this.contactsService.selectedContact;
+    editClicked = output<Contact>();
+    deleteClicked = output<Contact>();
+    menuOpen = signal(false);
+    deleteConfirmOpen = signal(false);
 
-  getInitials(name: string): string {
-    return name
-      .split(' ')
-      .map((part) => part.charAt(0))
-      .join('')
-      .toUpperCase();
-  }
+    getInitials = getInitials;
 
-  getColor(name: string): string {
-    return getAvatarColor(name);
-  }
+    constructor() {
+        effect(() => {
+            this.contact();
+            this.menuOpen.set(false);
+            this.deleteConfirmOpen.set(false);
+        });
+    }
+
+    onEdit(contact: Contact): void {
+        this.editClicked.emit(contact);
+    }
+
+    onDelete(): void {
+        this.deleteConfirmOpen.set(true);
+    }
+
+    confirmDelete(contact: Contact): void {
+        this.deleteConfirmOpen.set(false);
+        this.deleteClicked.emit(contact);
+    }
+
+    cancelDelete(): void {
+        this.deleteConfirmOpen.set(false);
+    }
+
+    toggleMenu(): void {
+        this.menuOpen.update((v) => !v);
+    }
 }

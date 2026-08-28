@@ -1,15 +1,34 @@
 <aside class="sidebar">
-  <img src="assets/icons/Joinlogo.svg" alt="Join Logo" />
+    <a class="sidebar__logo" routerLink="/summary" aria-label="Go to summary">
+        <img src="icons/join-logo.svg" alt="Join" />
+    </a>
 
-  <nav class="sidebar__nav">
-    <a routerLink="/summary" routerLinkActive="active" class="sidebar__link">Summary</a>
-    <a routerLink="/add-task" routerLinkActive="active" class="sidebar__link">Add Task</a>
-    <a routerLink="/board" routerLinkActive="active" class="sidebar__link">Board</a>
-    <a routerLink="/contacts" routerLinkActive="active" class="sidebar__link">Contacts</a>
-  </nav>
+    <nav class="sidebar__navigation" aria-label="Main navigation">
+        @for (item of navigationItems; track item.route) {
+            <a
+                class="sidebar__navigation-link"
+                [routerLink]="item.route"
+                routerLinkActive="sidebar__navigation-link--active"
+                ariaCurrentWhenActive="page"
+            >
+                <img [src]="'icons/' + item.icon" alt="" />
+                <span>{{ item.label }}</span>
+            </a>
+        }
+    </nav>
 
-  <div class="sidebar__footer">
-    <a routerLink="/privacy-policy" class="sidebar__footer-link">Privacy Policy</a>
-    <a routerLink="/legal-notice" class="sidebar__footer-link">Legal Notice</a>
-  </div>
+    <nav class="sidebar__legal" aria-label="Legal navigation">
+        <a
+            routerLink="/privacy-policy"
+            routerLinkActive="sidebar__legal-link--active"
+            ariaCurrentWhenActive="page"
+            >Privacy Policy</a
+        >
+        <a
+            routerLink="/legal-notice"
+            routerLinkActive="sidebar__legal-link--active"
+            ariaCurrentWhenActive="page"
+            >Legal notice</a
+        >
+    </nav>
 </aside>

@@ -1,39 +1,47 @@
 // ==========================================================================
 // Colors
 // ==========================================================================
-$color-bg: #F6F7F8;
-$color-bg-elevated: #2A3647;
-$color-accent: #3dcfb6;
-$color-accent-dark: #0f9b8e;
-$color-text: #ffffff;
-$color-text-muted: #a8a8a8;
-$color-error: #ff6b6b;
-$color-border: #3a3a3a;
-$color-sidebar-bg: #2A3647;
+$color-sidebar-bg: #2a3647;
 $color-sidebar-active: #091931;
+$color-accent: #007cee;
+$color-bg: #f6f7f8;
+$color-text: #2a3647;
+$color-text-muted: #a8a8a8;
+$color-error: #ff8190;
+$color-border: #d1d1d1;
+$color-field-border: #686868;
+$color-hover: #124658;
 
 // ==========================================================================
 // Typography
 // ==========================================================================
-$font-body: 'Fira Code', monospace;
-$font-headline: 'Karla', sans-serif;
+$font-primary: 'Inter', sans-serif;
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
 $font-weight-bold: 700;
+$font-weight-extrabold: 800;
 
 // ==========================================================================
 // Spacing
 // ==========================================================================
 $spacing-xs: 4px;
 $spacing-sm: 8px;
+$spacing-sl: 15px;
+$spacing-ml: 17px;
 $spacing-md: 16px;
 $spacing-lg: 24px;
 $spacing-xl: 32px;
+$spacing-xxl: 35px;
+$spacing-xxxl: 36px;
 
 // ==========================================================================
 // Layout
 // ==========================================================================
 $max-width: 1440px;
 $sidebar-width: 232px;
-$topbar-height: 96px;
+$topbar-height: 80px;
+$mobile-bar-height: 80px;
+$subtasks-height: 112px;
 
 // ==========================================================================
 // Transitions
@@ -46,3 +54,4 @@ $transition-fast: 100ms ease-in-out;
 $breakpoint-mobile: 767px;
 $breakpoint-tablet: 1023px;
 $breakpoint-desktop: 1439px;
+$breakpoint-columns: 1255px;
