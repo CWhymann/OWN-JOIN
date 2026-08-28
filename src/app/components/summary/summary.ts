@@ -1,9 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, computed, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TasksService } from '../../core/services/tasks.service';
 
 @Component({
-  selector: 'app-summary',
-  imports: [],
-  templateUrl: './summary.html',
-  styleUrl: './summary.scss',
+    selector: 'app-summary',
+    standalone: true,
+    imports: [RouterLink],
+    templateUrl: './summary.html',
+    styleUrl: './summary.scss',
 })
-export class Summary {}
+export class Summary implements OnInit {
+    private readonly tasksService = inject(TasksService);
+
+    // TODO: connect to auth service once login is implemented
+    // e.g. [currentUserName]="user()?.name" from AuthService
+    readonly currentUserName = input<string | null>(null);
+
+    private readonly tasks = this.tasksService.tasks;
+
+    readonly todoCount = computed(() => this.tasks().filter((t) => t.status === 'todo').length);
+    readonly doneCount = computed(() => this.tasks().filter((t) => t.status === 'done').length);
+    readonly inProgressCount = computed(
+        () => this.tasks().filter((t) => t.status === 'in-progress').length,
+    );
+    readonly awaitFeedbackCount = computed(
+        () => this.tasks().filter((t) => t.status === 'await-feedback').length,
+    );
+    readonly totalTasksInBoard = computed(() => this.tasks().length);
+
+    private readonly urgentTasks = computed(() =>
+        this.tasks().filter((t) => t.priority === 'urgent'),
+    );
+    readonly urgentCount = computed(() => this.urgentTasks().length);
+
+    private readonly nextUrgentDeadline = computed(() => {
+        const dates = this.urgentTasks()
+            .map((t) => t.dueDate)
+            .filter(Boolean)
+            .sort();
+        return dates.length ? dates[0] : null;
+    });
+
+    readonly formattedDeadline = computed(() => {
+        const date = this.nextUrgentDeadline();
+        if (!date) return '—';
+        return new Date(date).toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+        });
+    });
+
+    ngOnInit(): void {
+        this.tasksService.loadTasks();
+    }
+}
