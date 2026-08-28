@@ -1,0 +1,258 @@
+.summary {
+    padding: clamp(2rem, 4vw, 56px) clamp(2rem, 8vw, 117px);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+        margin-bottom: clamp(1.5rem, 3vw, 2rem);
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 61px);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .divider {
+            width: 3px;
+            height: clamp(2.5rem, 5vw, 59px);
+            background: #29abe2;
+        }
+
+        p {
+            font-size: clamp(1.25rem, 2.5vw, 27px);
+            color: #2a3647;
+            margin: 0;
+        }
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: clamp(80px, 3vw, 2.5rem);
+        flex-wrap: wrap;
+    }
+
+    &__cards {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        width: 560px;
+    }
+
+    &__group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    &__row {
+        display: flex;
+        gap: 32px;
+
+        &--bottom {
+            gap: 32px;
+        }
+    }
+
+    &__greeting {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        p:not(.summary__greeting--single) {
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            margin: 0;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+            color: #29abe2;
+            margin: 0;
+        }
+
+        p.summary__greeting--single {
+            font-size: clamp(2rem, 3.5vw, 47px);
+            margin: 0;
+        }
+    }
+
+    .card {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+        background: #fff;
+        border-radius: clamp(16px, 2vw, 30px);
+        padding: clamp(1rem, 2vw, 1.5rem);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            background: #2a3647;
+            color: #fff;
+
+            .card__icon--dark {
+                background-color: #fff;
+
+                .icon {
+                    background-color: #2a3647;
+                }
+            }
+        }
+
+        &__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(40px, 4vw, 48px);
+            height: clamp(40px, 4vw, 48px);
+            border-radius: 50%;
+            flex-shrink: 0;
+
+            &--dark {
+                background: #2a3647;
+            }
+
+            &--urgent {
+                background: #ff3d00;
+            }
+
+            .icon {
+                width: clamp(20px, 2vw, 24px);
+                height: clamp(20px, 2vw, 24px);
+                display: inline-block;
+                background-color: #fff;
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: contain;
+                -webkit-mask-repeat: no-repeat;
+                -webkit-mask-position: center;
+                -webkit-mask-size: contain;
+            }
+
+            .icon--edit {
+                mask-image: url('/icons/edit.svg');
+                -webkit-mask-image: url('/icons/edit.svg');
+            }
+
+            .icon--check {
+                mask-image: url('/icons/check.svg');
+                -webkit-mask-image: url('/icons/check.svg');
+            }
+
+            .icon--urgent {
+                mask-image: url('/icons/prio-urgent.svg');
+                -webkit-mask-image: url('/icons/prio-urgent.svg');
+            }
+        }
+
+        &__text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: clamp(70px, 8vw, 93px);
+        }
+
+        &__number {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+        }
+
+        &__label {
+            font-size: clamp(1rem, 1.1vw, 1.1rem);
+            color: inherit;
+        }
+
+        &__divider {
+            width: 1px;
+            height: 102px;
+            background: #d1d1d1;
+        }
+
+        &__deadline {
+            display: flex;
+            flex-direction: column;
+
+            .card__date {
+                white-space: nowrap;
+            }
+
+            .card__label {
+                font-size: 16px;
+            }
+        }
+
+        &__date {
+            font-weight: 700;
+            font-size: 21px;
+        }
+
+        &--icon {
+            width: 264px;
+            height: 168px;
+            flex: initial;
+            justify-content: center;
+            gap: 18px;
+
+            .card__icon {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        &--wide {
+            display: flex;
+            align-items: center;
+            width: 560px;
+            height: 168px;
+            padding: 28px 48px;
+            gap: 61px;
+
+            .card__group {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+
+                .card__icon {
+                    width: 64px;
+                    height: 64px;
+                }
+            }
+
+            .card__divider {
+                margin: 0;
+            }
+        }
+
+        &--plain {
+            width: 164px;
+            height: 164px;
+            flex: 0 0 164px;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            text-align: center;
+
+            .card__number {
+                font-size: clamp(2.5rem, 5vw, 4rem);
+            }
+
+            .card__label {
+                font-size: clamp(20px, 1.5vw, 22px);
+            }
+        }
+    }
+}
