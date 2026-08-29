@@ -106,13 +106,16 @@ export class Board implements OnInit, OnDestroy {
     protected allowTaskDrop(event: DragEvent, status: TaskStatus, task: BoardTask): void {
         const card = (event.currentTarget as HTMLElement).querySelector('.task-card');
         const rect = card?.getBoundingClientRect();
-        const isHorizontal = getComputedStyle(event.currentTarget as HTMLElement).flexBasis !== 'auto';
-        const hasPointerPosition = typeof event.clientX === 'number' && typeof event.clientY === 'number';
-        const isBefore = rect && hasPointerPosition
-            ? isHorizontal
-                ? event.clientX < rect.left + rect.width / 2
-                : event.clientY < rect.top + rect.height / 2
-            : true;
+        const isHorizontal =
+            getComputedStyle(event.currentTarget as HTMLElement).flexBasis !== 'auto';
+        const hasPointerPosition =
+            typeof event.clientX === 'number' && typeof event.clientY === 'number';
+        const isBefore =
+            rect && hasPointerPosition
+                ? isHorizontal
+                    ? event.clientX < rect.left + rect.width / 2
+                    : event.clientY < rect.top + rect.height / 2
+                : true;
         const columnTasks = this.tasksFor(status).filter((item) => item.id !== this.draggedTaskId);
         const taskIndex = columnTasks.findIndex((item) => item.id === task.id);
         const beforeId = isBefore ? task.id : columnTasks[taskIndex + 1]?.id;
@@ -232,6 +235,7 @@ export class Board implements OnInit, OnDestroy {
             tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
         );
         void this.tasksService.updateTask(updatedTask.id, { subtasks });
+        this.taskToastService.taskSaved();
     }
 
     protected async deleteTask(): Promise<void> {

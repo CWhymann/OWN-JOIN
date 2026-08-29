@@ -17,7 +17,13 @@
 
                 @if (isInvalid('title')) {
                     <span class="add-task-form__error">
-                        {{ form.controls.title.hasError('maxlength') ? 'Maximum 40 characters' : 'This field is required' }}
+                        @if (form.controls.title.hasError('maxlength')) {
+                            Maximum 40 characters
+                        } @else if (form.controls.title.hasError('onlySpecialChars')) {
+                            Title must contain at least one letter or number
+                        } @else {
+                            This field is required
+                        }
                     </span>
                 }
                 <span class="add-task-form__counter" aria-label="Title character count">
@@ -139,16 +145,24 @@
                                 <li>
                                     <button
                                         class="add-task-form__option"
-                                        [class.add-task-form__option--selected]="isSelected(contact)"
+                                        [class.add-task-form__option--selected]="
+                                            isSelected(contact)
+                                        "
                                         type="button"
                                         (click)="toggleContact(contact)"
                                     >
                                         <span
                                             class="add-task-form__avatar"
                                             [style.background-color]="contact.color"
-                                        >{{ getInitials(contact.name) }}</span>
-                                        <span class="add-task-form__option-name">{{ contact.name }}</span>
-                                        <span class="add-task-form__checkbox" aria-hidden="true"></span>
+                                            >{{ getInitials(contact.name) }}</span
+                                        >
+                                        <span class="add-task-form__option-name">{{
+                                            contact.name
+                                        }}</span>
+                                        <span
+                                            class="add-task-form__checkbox"
+                                            aria-hidden="true"
+                                        ></span>
                                     </button>
                                 </li>
                             }
@@ -163,7 +177,8 @@
                                 class="add-task-form__avatar"
                                 [style.background-color]="contact.color"
                                 [title]="contact.name"
-                            >{{ getInitials(contact.name) }}</span>
+                                >{{ getInitials(contact.name) }}</span
+                            >
                         }
 
                         @if (hiddenContactsCount()) {
@@ -206,7 +221,9 @@
                                         type="button"
                                         (click)="selectCategory(category)"
                                     >
-                                        <span class="add-task-form__option-name">{{ category }}</span>
+                                        <span class="add-task-form__option-name">{{
+                                            category
+                                        }}</span>
                                     </button>
                                 </li>
                             }
@@ -226,6 +243,7 @@
                     <input
                         id="task-subtask"
                         class="add-task-form__subtask-input"
+                        [class.add-task-form__subtask-input--shake]="subtaskShake()"
                         type="text"
                         placeholder="Add new subtask"
                         [value]="subtaskDraft()"
@@ -279,7 +297,10 @@
                                         (click)="saveSubtask()"
                                     ></button>
 
-                                    <span class="add-task-form__subtask-separator" aria-hidden="true"></span>
+                                    <span
+                                        class="add-task-form__subtask-separator"
+                                        aria-hidden="true"
+                                    ></span>
 
                                     <button
                                         class="add-task-form__subtask-action add-task-form__subtask-action--delete"
@@ -302,7 +323,10 @@
                                         (click)="startEditing($index)"
                                     ></button>
 
-                                    <span class="add-task-form__subtask-separator" aria-hidden="true"></span>
+                                    <span
+                                        class="add-task-form__subtask-separator"
+                                        aria-hidden="true"
+                                    ></span>
 
                                     <button
                                         class="add-task-form__subtask-action add-task-form__subtask-action--delete"
@@ -331,7 +355,10 @@
                 (click)="clearForm()"
             >
                 Clear
-                <span class="add-task-form__icon add-task-form__icon--cancel" aria-hidden="true"></span>
+                <span
+                    class="add-task-form__icon add-task-form__icon--cancel"
+                    aria-hidden="true"
+                ></span>
             </button>
 
             <button
@@ -340,7 +367,10 @@
                 [disabled]="form.invalid || isSubmitting()"
             >
                 {{ task() ? 'Ok' : 'Create Task' }}
-                <span class="add-task-form__icon add-task-form__icon--check" aria-hidden="true"></span>
+                <span
+                    class="add-task-form__icon add-task-form__icon--check"
+                    aria-hidden="true"
+                ></span>
             </button>
         </div>
     </div>

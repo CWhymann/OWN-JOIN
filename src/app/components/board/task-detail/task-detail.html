@@ -95,6 +95,23 @@
                     </div>
                 </div>
             }
+            @if (protectedNoticeOpen()) {
+    <div class="task-detail__overlay">
+        <div class="task-detail__confirm">
+            <p class="task-detail__confirm-text">
+                This task can't be edited or deleted.
+            </p>
+            <div class="task-detail__confirm-actions">
+                <button
+                    class="task-detail__confirm-btn task-detail__confirm-btn--confirm"
+                    (click)="closeProtectedNotice()"
+                >
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+}
         </div>
     </div>
 }

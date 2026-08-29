@@ -12,3 +12,8 @@ body {
     color: $color-text;
     font-family: $font-primary;
 }
+body.modal-open {
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+}

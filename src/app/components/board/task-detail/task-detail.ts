@@ -1,4 +1,16 @@
-import { afterRenderEffect, Component, ElementRef, HostListener, inject, input, OnDestroy, output, Renderer2, signal, viewChild } from '@angular/core';
+import {
+    afterRenderEffect,
+    Component,
+    ElementRef,
+    HostListener,
+    inject,
+    input,
+    OnDestroy,
+    output,
+    Renderer2,
+    signal,
+    viewChild,
+} from '@angular/core';
 import { CommonModule, DatePipe, DOCUMENT } from '@angular/common';
 
 const MIN_TITLE_FONT_SIZE = 16;
@@ -45,6 +57,7 @@ export class TaskDetail implements OnDestroy {
     subtaskChanged = output<{ index: number; done: boolean }>();
 
     deleteConfirmOpen = signal(false);
+    protectedNoticeOpen = signal(false);
     isClosing = signal(false);
 
     private scrollPosition = 0;
@@ -113,16 +126,24 @@ export class TaskDetail implements OnDestroy {
     }
 
     onEdit(task: TaskDetailData): void {
+        if (task.isProtected) {
+            this.protectedNoticeOpen.set(true);
+            return;
+        }
         this.editClicked.emit(task);
     }
 
     onDelete(): void {
         const task = this.task();
         if (task?.isProtected) {
-            this.deleteClicked.emit(task);
+            this.protectedNoticeOpen.set(true);
             return;
         }
         this.deleteConfirmOpen.set(true);
+    }
+
+    closeProtectedNotice(): void {
+        this.protectedNoticeOpen.set(false);
     }
 
     confirmDelete(task: TaskDetailData): void {

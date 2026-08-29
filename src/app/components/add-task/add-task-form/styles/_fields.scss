@@ -21,10 +21,11 @@
         mask-size: contain;
         transform: translateY(-50%);
         transition: background-color $transition-fast;
+    }
 
-        &:hover {
-            background-color: $color-hover;
-        }
+    &__control:hover &__control-icon {
+        background-color: $color-hover;
+        animation: icon-shake 0.4s ease-in-out;
     }
 
     &__resize {
@@ -66,7 +67,7 @@
 
         &--textarea {
             display: block;
-            height: 120px;
+            height: 192px;
             padding: 18px $spacing-md;
             resize: none;
 
@@ -90,12 +91,27 @@
 
     &__divider {
         width: 1px;
-        height: 424px;
+        height: 450px;
         flex-shrink: 0;
         background-color: $color-field-border;
 
         @media (max-width: #{$breakpoint-columns}) {
             display: none;
         }
+    }
+}
+@keyframes icon-shake {
+    0%,
+    100% {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-50%) rotate(-12deg);
+    }
+    50% {
+        transform: translateY(-50%) rotate(12deg);
+    }
+    75% {
+        transform: translateY(-50%) rotate(-8deg);
     }
 }

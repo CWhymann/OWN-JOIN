@@ -1,4 +1,13 @@
-import { Component, computed, HostListener, inject, input, OnInit, output, signal } from '@angular/core';
+import {
+    Component,
+    computed,
+    HostListener,
+    inject,
+    input,
+    OnInit,
+    output,
+    signal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BoardTask, NewTask, TaskCategory, TaskPriority } from '../../board/board-task.model';
 import { Contact } from '../../../core/models/contact.model';
@@ -8,7 +17,7 @@ import { getInitials } from '../../../core/utils/avatar.utils';
 import { dueDateValidator, formatDateInput, YEAR_RANGE } from '../../../core/utils/date.utils';
 import { TaskToastService } from '../../../core/services/task-toast.service';
 import { DatePicker } from './date-picker/date-picker';
-
+import { notOnlySpecialCharsValidator } from '../../../core/utils/validators.utils';
 
 const MAX_VISIBLE_AVATARS = 3;
 
@@ -42,6 +51,7 @@ export class AddTaskForm implements OnInit {
     protected readonly categories = ['Technical Task', 'User Story'];
     protected readonly subtasks = signal<string[]>([]);
     protected readonly subtaskDraft = signal('');
+    protected readonly subtaskShake = signal(false);
     protected readonly editingDraft = signal('');
     protected editingIndex = -1;
     protected readonly minYear = new Date().getFullYear();
@@ -49,7 +59,7 @@ export class AddTaskForm implements OnInit {
     protected readonly isSubmitting = signal(false);
 
     protected readonly form = this.formBuilder.group({
-        title: ['', [Validators.required, Validators.maxLength(40)]],
+        title: ['', [Validators.required, Validators.maxLength(40), notOnlySpecialCharsValidator]],
         description: [''],
         dueDate: ['', [Validators.required, dueDateValidator]],
         priority: ['medium'],
@@ -106,6 +116,7 @@ export class AddTaskForm implements OnInit {
             priority: 'medium',
             category: '',
         });
+        this.form.markAllAsTouched();
         this.selectedContacts.set([]);
         this.subtasks.set([]);
         this.subtaskDraft.set('');
@@ -184,11 +195,17 @@ export class AddTaskForm implements OnInit {
         const value = this.subtaskDraft().trim();
 
         if (!value) {
+            this.triggerSubtaskShake();
             return;
         }
 
         this.subtasks.update((items) => [...items, value]);
         this.subtaskDraft.set('');
+    }
+
+    private triggerSubtaskShake(): void {
+        this.subtaskShake.set(true);
+        setTimeout(() => this.subtaskShake.set(false), 400);
     }
 
     protected clearSubtask(): void {
