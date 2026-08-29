@@ -142,6 +142,7 @@
     min-height: 0;
     flex-direction: column;
     margin-top: clamp(12px, 2vw, 16px);
+    gap: $spacing-sm;
 }
 .assigned-list {
     min-height: 0;

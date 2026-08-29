@@ -5,6 +5,11 @@
         display: flex;
         flex-wrap: wrap;
         gap: $spacing-md;
+
+        @include mobile {
+            flex-wrap: nowrap;
+            gap: $spacing-sm;
+        }
     }
 
     &__priority {
@@ -16,7 +21,7 @@
         align-items: center;
         justify-content: center;
         gap: $spacing-sm;
-        padding: $spacing-md 10px;
+        padding: $spacing-md $spacing-lg;
         border: unset;
         border-radius: 10px;
         background-color: #ffffff;
@@ -25,7 +30,9 @@
         cursor: pointer;
         font-size: 20px;
         line-height: 120%;
-        transition: background-color $transition-fast, color $transition-fast,
+        transition:
+            background-color $transition-fast,
+            color $transition-fast,
             box-shadow $transition-fast;
 
         &:hover {
@@ -54,8 +61,10 @@
 
         @include mobile {
             height: 41px;
-            padding: 18px 10px;
+            padding: 18px $spacing-md;
             font-size: 16px;
+            flex: 1 0 0;
+            min-width: 0;
 
             &--active {
                 font-size: 16px;

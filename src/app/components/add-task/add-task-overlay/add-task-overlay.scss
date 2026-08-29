@@ -12,6 +12,7 @@
 
     @include mobile {
         padding: 0;
+        inset: $mobile-bar-height 0;
     }
 
     &__dialog {

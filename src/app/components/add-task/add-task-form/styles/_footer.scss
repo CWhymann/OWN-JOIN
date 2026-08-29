@@ -16,6 +16,7 @@
             bottom: var(--add-task-footer-bottom, #{$mobile-bar-height});
             flex-direction: column;
             align-items: stretch;
+            padding-block: $spacing-sm $spacing-md;
         }
     }
 
@@ -58,10 +59,15 @@
         border-radius: 10px;
         cursor: pointer;
         line-height: 120%;
-        transition: background-color $transition-fast, border-color $transition-fast,
-            color $transition-fast, filter $transition-fast, box-shadow $transition-fast;
+        transition:
+            background-color $transition-fast,
+            border-color $transition-fast,
+            color $transition-fast,
+            filter $transition-fast,
+            box-shadow $transition-fast;
 
         @include mobile {
+            height: 44px;
             padding: clamp(8px, -0.981rem + 7.407vw, 16px);
         }
 
