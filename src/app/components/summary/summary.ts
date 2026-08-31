@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TasksService } from '../../core/services/tasks.service';
+import { UrgentHighlightService } from '../../core/services/urgent-highlight.service';
 
 @Component({
     selector: 'app-summary',
@@ -11,6 +12,8 @@ import { TasksService } from '../../core/services/tasks.service';
 })
 export class Summary implements OnInit {
     private readonly tasksService = inject(TasksService);
+    private readonly urgentHighlightService = inject(UrgentHighlightService);
+    private readonly router = inject(Router);
 
     // TODO: connect to auth service once login is implemented
     // e.g. [currentUserName]="user()?.name" from AuthService
@@ -53,5 +56,10 @@ export class Summary implements OnInit {
 
     ngOnInit(): void {
         this.tasksService.loadTasks();
+    }
+
+    onUrgentClick(): void {
+        this.urgentHighlightService.trigger();
+        this.router.navigate(['/board']);
     }
 }
