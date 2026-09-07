@@ -1,1 +1,64 @@
-<p>login works!</p>
+<div class="login-page">
+    @if (showSplash()) {
+        <div class="splash-overlay" [class.logo-in-place]="logoInPlace()">
+            <img class="splash-logo" src="/icons/Logo_Start.svg" alt="Join Logo" />
+        </div>
+    }
+
+    @if (showCard()) {
+        <div class="login-top-row">
+            <img class="logo" src="/icons/Logo_Start.svg" alt="Join Logo" />
+
+            <div class="signup-hint">
+                <span>Not a Join user?</span>
+                <a routerLink="/sign-up">Sign up</a>
+            </div>
+        </div>
+
+        <div class="login-card">
+            <div class="login-card__header">
+                <h1>Log in</h1>
+                <div class="login-card__underline"></div>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-field">
+                    <input
+                        type="email"
+                        formControlName="email"
+                        placeholder="Email"
+                        [class.error]="isInvalid('email')"
+                    />
+                    <img class="field-icon" src="/icons/mail_icon.svg" alt="" />
+                </div>
+
+                <div class="form-field">
+                    <input
+                        type="password"
+                        formControlName="password"
+                        placeholder="Password"
+                        [class.error]="isInvalid('password')"
+                    />
+                    <img class="field-icon" src="/icons/lock.svg" alt="" />
+                    <span class="error-text">{{
+                        isInvalid('password') ? 'This field is required' : ''
+                    }}</span>
+                </div>
+
+                <div class="login-buttons">
+                    <button type="submit" class="btn-primary" [disabled]="form.invalid">
+                        Log in
+                    </button>
+                    <button type="button" class="btn-secondary" (click)="onGuestLogin()">
+                        Guest Log in
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <footer class="login-footer">
+            <a routerLink="/privacy-policy">Privacy Policy</a>
+            <a routerLink="/legal-notice">Legal notice</a>
+        </footer>
+    }
+</div>
