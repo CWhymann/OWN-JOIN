@@ -1,8 +1,11 @@
-import { Component, OnInit, computed, inject, input } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { TasksService } from '../../core/services/tasks.service';
 import { UrgentHighlightService } from '../../core/services/urgent-highlight.service';
+import { TaskToastService } from '../../core/services/task-toast.service';
 
+/** Dashboard with the task counters, the next urgent deadline and the greeting. */
 @Component({
     selector: 'app-summary',
     standalone: true,
@@ -12,12 +15,16 @@ import { UrgentHighlightService } from '../../core/services/urgent-highlight.ser
 })
 export class Summary implements OnInit {
     private readonly tasksService = inject(TasksService);
+    protected readonly taskToastService = inject(TaskToastService);
     private readonly urgentHighlightService = inject(UrgentHighlightService);
     private readonly router = inject(Router);
+    private readonly authService = inject(AuthService);
 
-    // TODO: connect to auth service once login is implemented
-    // e.g. [currentUserName]="user()?.name" from AuthService
-    readonly currentUserName = input<string | null>(null);
+    readonly currentUserName = computed(() =>
+        this.authService.isGuest() ? null : this.authService.userName(),
+    );
+
+    readonly greetingText = computed(() => this.getGreetingByHour(new Date().getHours()));
 
     private readonly tasks = this.tasksService.tasks;
 
@@ -54,12 +61,25 @@ export class Summary implements OnInit {
         });
     });
 
+    /** Loads the tasks the counters are derived from. */
     ngOnInit(): void {
         this.tasksService.loadTasks();
     }
 
+    /** Opens the board and asks it to highlight the urgent tasks. */
     onUrgentClick(): void {
         this.urgentHighlightService.trigger();
         this.router.navigate(['/board']);
+    }
+
+    /**
+     * Picks the greeting that fits the time of day.
+     * @param hour - Hour of the day from 0 to 23.
+     * @returns Greeting for morning, afternoon or evening.
+     */
+    private getGreetingByHour(hour: number): string {
+        if (hour < 12) return 'Good morning';
+        if (hour < 18) return 'Good afternoon';
+        return 'Good evening';
     }
 }

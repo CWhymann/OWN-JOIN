@@ -95,7 +95,7 @@
             <span class="error-text privacy-error">{{
                 isInvalid('privacyAccepted') ? 'Please accept the privacy policy.' : ''
             }}</span>
-
+            <span class="signup-form-error">{{ errorMessage() }}</span>
             <button type="submit" class="submit-btn" [disabled]="form.invalid">Sign up</button>
         </form>
     </div>

@@ -9,6 +9,7 @@ import {
     ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-sign-up',
@@ -20,7 +21,9 @@ import { Router, RouterLink } from '@angular/router';
 export class SignUp {
     private fb = inject(FormBuilder);
     private router = inject(Router);
+    private authService = inject(AuthService);
 
+    errorMessage = signal('');
     passwordVisible = signal(false);
     confirmPasswordVisible = signal(false);
 
@@ -84,11 +87,24 @@ export class SignUp {
         this.form.markAllAsTouched();
     }
 
-    onSubmit(): void {
+    async onSubmit(): Promise<void> {
+        this.errorMessage.set('');
+
         if (this.form.invalid) {
             this.markAllTouched();
             return;
         }
+
+        const { name, email, password } = this.form.getRawValue();
+
+        const error = await this.authService.signUp(email, password, name);
+
+        if (error) {
+            this.errorMessage.set('Registration failed.');
+            return;
+        }
+
+        await this.router.navigate(['/login']);
     }
 
     goBack(): void {

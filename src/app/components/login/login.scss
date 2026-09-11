@@ -180,6 +180,17 @@ form {
     }
 }
 
+.login-form-error {
+    display: block;
+    width: 100%;
+    min-height: 20px;
+    margin: 0;
+    font-size: 16px;
+    color: $color-error;
+    line-height: 20px;
+    text-align: center;
+}
+
 .login-buttons {
     display: flex;
     gap: clamp($spacing-md, 3vw, $spacing-xxl);

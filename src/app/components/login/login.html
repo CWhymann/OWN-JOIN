@@ -45,6 +45,8 @@
                     }}</span>
                 </div>
 
+                <span class="login-form-error">{{ errorMessage() }}</span>
+
                 <div class="login-buttons">
                     <button type="submit" class="btn-primary" [disabled]="form.invalid">
                         Log in

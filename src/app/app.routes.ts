@@ -6,6 +6,7 @@ import { Summary } from './components/summary/summary';
 import { AddTask } from './components/add-task/add-task';
 import { Board } from './components/board/board';
 import { Contacts } from './components/contacts/contacts';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {
         path: '',
         component: MainLayout,
+        canActivate: [authGuard],
         children: [
             { path: 'summary', component: Summary },
             { path: 'add-task', component: AddTask },

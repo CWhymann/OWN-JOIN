@@ -139,6 +139,16 @@ form {
         line-height: 1.2;
     }
 }
+.signup-form-error {
+    display: block;
+    width: 100%;
+    min-height: 20px;
+    margin: 0;
+    font-size: 16px;
+    color: $color-error;
+    line-height: 20px;
+    text-align: center;
+}
 
 .privacy-error {
     display: block;
