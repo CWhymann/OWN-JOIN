@@ -1,1 +1,11 @@
-<p>priority-select works!</p>
+@for (priority of priorities; track priority.value) {
+    <button
+        class="priority-select__option priority-select__option--{{ priority.value }}"
+        [class.priority-select__option--active]="value() === priority.value"
+        type="button"
+        (click)="priorityChange.emit(priority.value)"
+    >
+        {{ priority.label }}
+        <span class="priority-select__icon" aria-hidden="true"></span>
+    </button>
+}
