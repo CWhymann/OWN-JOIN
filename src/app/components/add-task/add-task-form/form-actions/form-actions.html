@@ -1,0 +1,21 @@
+<p class="form-actions__required"><span aria-hidden="true">*</span>This field is required</p>
+
+<div class="form-actions__buttons">
+    <button
+        class="form-actions__button form-actions__button--secondary"
+        type="button"
+        (click)="cleared.emit()"
+    >
+        Clear
+        <span class="form-actions__icon form-actions__icon--cancel" aria-hidden="true"></span>
+    </button>
+
+    <button
+        class="form-actions__button form-actions__button--primary"
+        type="submit"
+        [disabled]="disabled()"
+    >
+        {{ editing() ? 'Ok' : 'Create Task' }}
+        <span class="form-actions__icon form-actions__icon--check" aria-hidden="true"></span>
+    </button>
+</div>

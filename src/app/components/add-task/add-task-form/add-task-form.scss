@@ -1,7 +1,5 @@
 @use '../../../../styles/abstracts' as *;
-@use 'styles/subtasks';
 @use 'styles/fields';
-@use 'styles/footer';
 
 :host {
     display: flex;

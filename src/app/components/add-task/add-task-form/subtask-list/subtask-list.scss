@@ -1,7 +1,13 @@
 @use '../../../../../styles/abstracts' as *;
 
-.add-task-form {
-    &__subtask-control {
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+}
+
+.subtask-list {
+    &__control {
         display: flex;
         height: 48px;
         align-items: center;
@@ -17,15 +23,15 @@
             border-color: $color-hover;
         }
 
-        .add-task-form__subtask-input {
+        .subtask-list__input {
             cursor: pointer;
         }
 
-        .add-task-form__subtask-tools {
+        .subtask-list__tools {
             visibility: hidden;
         }
 
-        &:focus-within .add-task-form__subtask-tools {
+        &:focus-within .subtask-list__tools {
             visibility: visible;
         }
 
@@ -35,7 +41,7 @@
         }
     }
 
-    &__subtask-input {
+    &__input {
         width: 100%;
         border: unset;
         background-color: transparent;
@@ -51,18 +57,22 @@
             outline: none;
         }
 
+        &--shake {
+            animation: subtask-shake 0.4s ease-in-out;
+        }
+
         @include mobile {
             font-size: 16px;
         }
     }
 
-    &__subtask-tools {
+    &__tools {
         display: flex;
         align-items: center;
         gap: $spacing-xs;
     }
 
-    &__subtask-action {
+    &__action {
         width: 24px;
         height: 24px;
         flex-shrink: 0;
@@ -95,14 +105,14 @@
         }
     }
 
-    &__subtask-separator {
+    &__separator {
         width: 1px;
         height: 24px;
         flex-shrink: 0;
         background-color: $color-field-border;
     }
 
-    &__subtasks {
+    &__list {
         display: flex;
         height: $subtasks-height;
         flex-direction: column;
@@ -125,7 +135,7 @@
         }
     }
 
-    &__subtask {
+    &__item {
         display: flex;
         height: 32px;
         flex-shrink: 0;
@@ -135,21 +145,21 @@
         padding: 6px $spacing-md;
         cursor: pointer;
 
-        .add-task-form__subtask-tools {
+        .subtask-list__tools {
             opacity: 0;
             transition: opacity $transition-fast;
         }
 
-        &:hover .add-task-form__subtask-tools,
-        &--editing .add-task-form__subtask-tools {
+        &:hover .subtask-list__tools,
+        &--editing .subtask-list__tools {
             opacity: 1;
         }
 
-        .add-task-form__subtask-separator {
+        .subtask-list__separator {
             background-color: $color-text-muted;
         }
 
-        .add-task-form__subtask-input {
+        .subtask-list__input {
             font-size: 16px;
         }
 
@@ -161,16 +171,14 @@
         }
     }
 
-    &__subtask-text {
-        overflow: hidden;
+    &__text {
+        min-width: 0;
+        overflow: clip;
         font-size: 16px;
         line-height: 120%;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-}
-.add-task-form__subtask-input--shake {
-    animation: subtask-shake 0.4s ease-in-out;
 }
 
 @keyframes subtask-shake {

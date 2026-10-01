@@ -1,0 +1,88 @@
+<div class="subtask-list__control">
+    <input
+        id="task-subtask"
+        class="subtask-list__input"
+        [class.subtask-list__input--shake]="shake()"
+        type="text"
+        placeholder="Add new subtask"
+        [value]="draft()"
+        (input)="onDraftInput($event)"
+        (keydown.enter)="add($event)"
+    />
+
+    <div class="subtask-list__tools">
+        <button
+            class="subtask-list__action subtask-list__action--cancel"
+            type="button"
+            aria-label="Clear subtask"
+            (click)="clearDraft()"
+        ></button>
+
+        <span class="subtask-list__separator" aria-hidden="true"></span>
+
+        <button
+            class="subtask-list__action subtask-list__action--check"
+            type="button"
+            aria-label="Add subtask"
+            (click)="add()"
+        ></button>
+    </div>
+</div>
+
+<ul class="subtask-list__list">
+    @for (subtask of subtasks(); track $index) {
+        <li
+            class="subtask-list__item"
+            [class.subtask-list__item--editing]="editingIndex() === $index"
+            (click)="startEditing($index)"
+        >
+            @if (editingIndex() === $index) {
+                <input
+                    class="subtask-list__input"
+                    type="text"
+                    [value]="editingDraft()"
+                    (input)="onEditingInput($event)"
+                    (keydown.enter)="save($event)"
+                />
+
+                <div class="subtask-list__tools" (click)="$event.stopPropagation()">
+                    <button
+                        class="subtask-list__action subtask-list__action--check"
+                        type="button"
+                        aria-label="Save subtask"
+                        (click)="save()"
+                    ></button>
+
+                    <span class="subtask-list__separator" aria-hidden="true"></span>
+
+                    <button
+                        class="subtask-list__action subtask-list__action--delete"
+                        type="button"
+                        aria-label="Delete subtask"
+                        (click)="remove($index)"
+                    ></button>
+                </div>
+            } @else {
+                <span class="subtask-list__text">{{ subtask }}</span>
+
+                <div class="subtask-list__tools" (click)="$event.stopPropagation()">
+                    <button
+                        class="subtask-list__action subtask-list__action--edit"
+                        type="button"
+                        aria-label="Edit subtask"
+                        (click)="startEditing($index)"
+                    ></button>
+
+                    <span class="subtask-list__separator" aria-hidden="true"></span>
+
+                    <button
+                        class="subtask-list__action subtask-list__action--delete"
+                        type="button"
+                        aria-label="Delete subtask"
+                        (click)="remove($index)"
+                    ></button>
+                </div>
+            }
+        </li>
+    }
+</ul>

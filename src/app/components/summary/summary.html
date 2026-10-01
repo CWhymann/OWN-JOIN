@@ -72,10 +72,10 @@
 
         <div class="summary__greeting">
             @if (currentUserName()) {
-                <p>Good morning,</p>
+                <p>{{ greetingText() }},</p>
                 <h2>{{ currentUserName() }}</h2>
             } @else {
-                <p class="summary__greeting--single">Good morning!</p>
+                <p class="summary__greeting--single">{{ greetingText() }}!</p>
             }
         </div>
     </div>

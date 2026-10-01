@@ -1,4 +1,13 @@
-import { Component, HostListener, inject, input, OnInit, output, signal } from '@angular/core';
+import {
+    Component,
+    HostListener,
+    inject,
+    input,
+    OnInit,
+    output,
+    signal,
+    viewChild,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BoardTask, NewTask, TaskCategory, TaskPriority } from '../../board/board-task.model';
 import { Contact } from '../../../core/models/contact.model';
@@ -9,13 +18,23 @@ import { TaskToastService } from '../../../core/services/task-toast.service';
 import { CategorySelect } from './category-select/category-select';
 import { ContactSelect } from './contact-select/contact-select';
 import { DatePicker } from './date-picker/date-picker';
+import { FormActions } from './form-actions/form-actions';
 import { PrioritySelect } from './priority-select/priority-select';
+import { SubtaskList } from './subtask-list/subtask-list';
 import { notOnlySpecialCharsValidator } from '../../../core/utils/validators.utils';
 
 @Component({
     selector: 'app-add-task-form',
     standalone: true,
-    imports: [CategorySelect, ContactSelect, DatePicker, PrioritySelect, ReactiveFormsModule],
+    imports: [
+        CategorySelect,
+        ContactSelect,
+        DatePicker,
+        FormActions,
+        PrioritySelect,
+        ReactiveFormsModule,
+        SubtaskList,
+    ],
     templateUrl: './add-task-form.html',
     styleUrl: './add-task-form.scss',
 })
@@ -24,6 +43,7 @@ export class AddTaskForm implements OnInit {
     private contactsService = inject(ContactsService);
     private tasksService = inject(TasksService);
     private taskToastService = inject(TaskToastService);
+    private readonly subtaskList = viewChild(SubtaskList);
     readonly taskCreated = output<void>();
     readonly task = input<BoardTask | null>(null);
 
@@ -34,10 +54,6 @@ export class AddTaskForm implements OnInit {
     protected isDatePickerOpen = false;
     protected readonly categories = ['Technical Task', 'User Story'];
     protected readonly subtasks = signal<string[]>([]);
-    protected readonly subtaskDraft = signal('');
-    protected readonly subtaskShake = signal(false);
-    protected readonly editingDraft = signal('');
-    protected editingIndex = -1;
     protected readonly minYear = new Date().getFullYear();
     protected readonly maxYear = this.minYear + YEAR_RANGE;
     protected readonly isSubmitting = signal(false);
@@ -103,8 +119,7 @@ export class AddTaskForm implements OnInit {
         this.form.markAllAsTouched();
         this.selectedContacts.set([]);
         this.subtasks.set([]);
-        this.subtaskDraft.set('');
-        this.editingIndex = -1;
+        this.subtaskList()?.reset();
     }
 
     protected onDueDateInput(event: Event): void {
@@ -164,65 +179,6 @@ export class AddTaskForm implements OnInit {
         this.isAssignedOpen = false;
         this.isCategoryOpen = false;
         this.isDatePickerOpen = false;
-    }
-
-    protected onSubtaskInput(event: Event): void {
-        this.subtaskDraft.set((event.target as HTMLInputElement).value);
-    }
-
-    protected addSubtask(event?: Event): void {
-        event?.preventDefault();
-        const value = this.subtaskDraft().trim();
-
-        if (!value) {
-            this.triggerSubtaskShake();
-            return;
-        }
-
-        this.subtasks.update((items) => [...items, value]);
-        this.subtaskDraft.set('');
-    }
-
-    private triggerSubtaskShake(): void {
-        this.subtaskShake.set(true);
-        setTimeout(() => this.subtaskShake.set(false), 400);
-    }
-
-    protected clearSubtask(): void {
-        this.subtaskDraft.set('');
-    }
-
-    protected removeSubtask(index: number): void {
-        this.subtasks.update((items) => items.filter((_, position) => position !== index));
-        this.editingIndex = -1;
-    }
-
-    protected startEditing(index: number): void {
-        if (this.editingIndex === index) {
-            return;
-        }
-
-        this.editingIndex = index;
-        this.editingDraft.set(this.subtasks()[index]);
-    }
-
-    protected onEditingInput(event: Event): void {
-        this.editingDraft.set((event.target as HTMLInputElement).value);
-    }
-
-    protected saveSubtask(event?: Event): void {
-        event?.preventDefault();
-        const value = this.editingDraft().trim();
-
-        if (!value) {
-            return;
-        }
-
-        const index = this.editingIndex;
-        this.subtasks.update((items) =>
-            items.map((item, position) => (position === index ? value : item)),
-        );
-        this.editingIndex = -1;
     }
 
     protected selectPriority(priority: string): void {
