@@ -1,0 +1,114 @@
+@use '../../../../../styles/abstracts' as *;
+
+:host {
+    display: block;
+}
+
+.category-select {
+    &__dropdown {
+        position: relative;
+    }
+
+    &__select {
+        display: flex;
+        width: 100%;
+        height: 48px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px $spacing-md;
+        border: 1px solid $color-field-border;
+        border-radius: 10px;
+        background-color: #ffffff;
+        color: #000000;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 120%;
+        text-align: left;
+        transition: border-color $transition-fast;
+
+        &:hover,
+        &[aria-expanded='true'] {
+            border-color: $color-hover;
+        }
+
+        &--invalid {
+            &,
+            &:hover {
+                border-color: $color-error;
+            }
+        }
+
+        @include mobile {
+            height: 40px;
+            padding: 10px $spacing-md;
+            font-size: 16px;
+        }
+    }
+
+    &__select-icon {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        background-color: $color-text;
+        mask-image: url('../../../../../../public/icons/arrow-drop-down.svg');
+        mask-position: center;
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        transition: transform $transition-fast;
+
+        &--open {
+            transform: rotate(180deg);
+        }
+    }
+
+    &__select:hover &__select-icon {
+        transform: scale(1.3);
+    }
+
+    &__select[aria-expanded='true'] &__select-icon {
+        transform: rotate(180deg) scale(1.3);
+    }
+
+    &__options {
+        position: absolute;
+        z-index: 10;
+        top: calc(100% + #{$spacing-xs});
+        right: 0;
+        left: 0;
+        max-height: 260px;
+        padding: $spacing-sm;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: inset 0 3px 10px rgb(0 0 0 / 45%);
+        list-style: none;
+        overflow-y: auto;
+    }
+
+    &__option {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: $spacing-md;
+        padding: 7px $spacing-md;
+        border: unset;
+        border-radius: 10px;
+        background-color: transparent;
+        color: #000000;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: left;
+        transition: background-color $transition-fast;
+
+        &:hover {
+            background-color: #e4e7eb;
+        }
+    }
+
+    &__option-name {
+        min-width: 0;
+        flex: 1;
+        overflow: clip;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

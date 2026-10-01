@@ -1,0 +1,58 @@
+<div class="contact-select__dropdown" (click)="$event.stopPropagation()">
+    <button
+        id="task-assigned"
+        class="contact-select__select"
+        type="button"
+        [attr.aria-expanded]="open()"
+        (click)="toggleOpen.emit($event)"
+    >
+        Select contacts to assign
+        <span
+            class="contact-select__select-icon"
+            [class.contact-select__select-icon--open]="open()"
+            aria-hidden="true"
+        ></span>
+    </button>
+
+    @if (open()) {
+        <ul class="contact-select__options">
+            @for (contact of contacts(); track contact.id) {
+                <li>
+                    <button
+                        class="contact-select__option"
+                        [class.contact-select__option--selected]="isSelected(contact)"
+                        type="button"
+                        (click)="contactToggled.emit(contact)"
+                    >
+                        <span
+                            class="contact-select__avatar"
+                            [style.background-color]="contact.color"
+                            >{{ getInitials(contact.name) }}</span
+                        >
+                        <span class="contact-select__option-name">{{ contact.name }}</span>
+                        <span class="contact-select__checkbox" aria-hidden="true"></span>
+                    </button>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+<div class="contact-select__avatars">
+    @if (selected().length) {
+        @for (contact of visibleContacts(); track contact.id) {
+            <span
+                class="contact-select__avatar"
+                [style.background-color]="contact.color"
+                [title]="contact.name"
+                >{{ getInitials(contact.name) }}</span
+            >
+        }
+
+        @if (hiddenContactsCount()) {
+            <span class="contact-select__avatar contact-select__avatar--more">
+                +{{ hiddenContactsCount() }}
+            </span>
+        }
+    }
+</div>

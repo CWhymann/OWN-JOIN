@@ -1,30 +1,21 @@
-import {
-    Component,
-    computed,
-    HostListener,
-    inject,
-    input,
-    OnInit,
-    output,
-    signal,
-} from '@angular/core';
+import { Component, HostListener, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BoardTask, NewTask, TaskCategory, TaskPriority } from '../../board/board-task.model';
 import { Contact } from '../../../core/models/contact.model';
 import { ContactsService } from '../../../core/services/contacts.service';
 import { TasksService } from '../../../core/services/tasks.service';
-import { getInitials } from '../../../core/utils/avatar.utils';
 import { dueDateValidator, formatDateInput, YEAR_RANGE } from '../../../core/utils/date.utils';
 import { TaskToastService } from '../../../core/services/task-toast.service';
+import { CategorySelect } from './category-select/category-select';
+import { ContactSelect } from './contact-select/contact-select';
 import { DatePicker } from './date-picker/date-picker';
+import { PrioritySelect } from './priority-select/priority-select';
 import { notOnlySpecialCharsValidator } from '../../../core/utils/validators.utils';
-
-const MAX_VISIBLE_AVATARS = 3;
 
 @Component({
     selector: 'app-add-task-form',
     standalone: true,
-    imports: [DatePicker, ReactiveFormsModule],
+    imports: [CategorySelect, ContactSelect, DatePicker, PrioritySelect, ReactiveFormsModule],
     templateUrl: './add-task-form.html',
     styleUrl: './add-task-form.scss',
 })
@@ -38,13 +29,6 @@ export class AddTaskForm implements OnInit {
 
     protected readonly contacts = this.contactsService.contacts;
     protected readonly selectedContacts = signal<Contact[]>([]);
-    protected readonly visibleContacts = computed(() =>
-        this.selectedContacts().slice(0, MAX_VISIBLE_AVATARS),
-    );
-    protected readonly hiddenContactsCount = computed(() =>
-        Math.max(0, this.selectedContacts().length - MAX_VISIBLE_AVATARS),
-    );
-    protected readonly getInitials = getInitials;
     protected isAssignedOpen = false;
     protected isCategoryOpen = false;
     protected isDatePickerOpen = false;
@@ -170,10 +154,6 @@ export class AddTaskForm implements OnInit {
         );
     }
 
-    protected isSelected(contact: Contact): boolean {
-        return this.selectedContacts().includes(contact);
-    }
-
     @HostListener('document:click')
     @HostListener('document:keydown.escape')
     protected closeDropdowns(): void {
@@ -247,10 +227,6 @@ export class AddTaskForm implements OnInit {
 
     protected selectPriority(priority: string): void {
         this.form.patchValue({ priority });
-    }
-
-    protected isPriority(priority: string): boolean {
-        return this.form.value.priority === priority;
     }
 
     protected async createTask(): Promise<void> {

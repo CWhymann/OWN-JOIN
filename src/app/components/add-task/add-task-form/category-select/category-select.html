@@ -1,0 +1,33 @@
+<div class="category-select__dropdown" (click)="$event.stopPropagation()">
+    <button
+        id="task-category"
+        class="category-select__select"
+        [class.category-select__select--invalid]="invalid()"
+        type="button"
+        [attr.aria-expanded]="open()"
+        (click)="toggleOpen.emit($event)"
+    >
+        {{ value() || 'Select task category' }}
+        <span
+            class="category-select__select-icon"
+            [class.category-select__select-icon--open]="open()"
+            aria-hidden="true"
+        ></span>
+    </button>
+
+    @if (open()) {
+        <ul class="category-select__options">
+            @for (category of categories(); track category) {
+                <li>
+                    <button
+                        class="category-select__option"
+                        type="button"
+                        (click)="categorySelected.emit(category)"
+                    >
+                        <span class="category-select__option-name">{{ category }}</span>
+                    </button>
+                </li>
+            }
+        </ul>
+    }
+</div>

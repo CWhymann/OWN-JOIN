@@ -1,18 +1,18 @@
 @use '../../../../../styles/abstracts' as *;
 
-.add-task-form {
-    &__priorities {
-        display: flex;
-        flex-wrap: wrap;
-        gap: $spacing-md;
+:host {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
 
-        @include mobile {
-            flex-wrap: nowrap;
-            gap: $spacing-sm;
-        }
+    @include mobile {
+        flex-wrap: nowrap;
+        gap: $spacing-sm;
     }
+}
 
-    &__priority {
+.priority-select {
+    &__option {
         --priority-color: #{$color-text};
 
         display: flex;
@@ -72,7 +72,7 @@
         }
     }
 
-    &__priority-icon {
+    &__icon {
         width: 20px;
         height: 15px;
         flex-shrink: 0;
@@ -81,20 +81,20 @@
         mask-repeat: no-repeat;
         mask-size: contain;
 
-        .add-task-form__priority--urgent & {
+        .priority-select__option--urgent & {
             mask-image: url('../../../../../../public/icons/prio-urgent.svg');
         }
 
-        .add-task-form__priority--medium & {
+        .priority-select__option--medium & {
             height: 8px;
             mask-image: url('../../../../../../public/icons/prio-medium.svg');
         }
 
-        .add-task-form__priority--low & {
+        .priority-select__option--low & {
             mask-image: url('../../../../../../public/icons/prio-low.svg');
         }
 
-        .add-task-form__priority--active & {
+        .priority-select__option--active & {
             background-color: $color-bg;
         }
     }

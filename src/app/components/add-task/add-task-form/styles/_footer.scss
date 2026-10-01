@@ -105,7 +105,7 @@
             }
 
             &:disabled {
-                background-color: $color-text-muted;
+                background-color: $color-text;
                 box-shadow: none;
                 cursor: not-allowed;
             }
