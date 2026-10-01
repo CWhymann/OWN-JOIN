@@ -72,11 +72,11 @@ export class SignUp {
     getPasswordIcon(field: 'password' | 'confirmPassword'): string {
         const hasValue = !!this.form.get(field)?.value;
         if (!hasValue) {
-            return '/icons/lock.svg';
+            return 'icons/lock.svg';
         }
         const visible =
             field === 'password' ? this.passwordVisible() : this.confirmPasswordVisible();
-        return visible ? '/icons/visibility.svg' : '/icons/visibility_off.svg';
+        return visible ? 'icons/visibility.svg' : 'icons/visibility_off.svg';
     }
 
     isIconClickable(field: 'password' | 'confirmPassword'): boolean {

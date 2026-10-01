@@ -1,13 +1,13 @@
 <div class="login-page">
     @if (showSplash()) {
         <div class="splash-overlay" [class.logo-in-place]="logoInPlace()">
-            <img class="splash-logo" src="/icons/Logo_Start.svg" alt="Join Logo" />
+            <img class="splash-logo" src="icons/Logo_Start.svg" alt="Join Logo" />
         </div>
     }
 
     @if (showCard()) {
         <div class="login-top-row">
-            <img class="logo" src="/icons/Logo_Start.svg" alt="Join Logo" />
+            <img class="logo" src="icons/Logo_Start.svg" alt="Join Logo" />
 
             <div class="signup-hint">
                 <span>Not a Join user?</span>
@@ -29,7 +29,7 @@
                         placeholder="Email"
                         [class.error]="isInvalid('email')"
                     />
-                    <img class="field-icon" src="/icons/mail_icon.svg" alt="" />
+                    <img class="field-icon" src="icons/mail_icon.svg" alt="" />
                 </div>
 
                 <div class="form-field">
@@ -39,7 +39,7 @@
                         placeholder="Password"
                         [class.error]="isInvalid('password')"
                     />
-                    <img class="field-icon" src="/icons/lock.svg" alt="" />
+                    <img class="field-icon" src="icons/lock.svg" alt="" />
                     <span class="error-text">{{
                         isInvalid('password') ? 'This field is required' : ''
                     }}</span>

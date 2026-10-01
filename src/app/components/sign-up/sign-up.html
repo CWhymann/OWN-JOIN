@@ -1,11 +1,11 @@
 <div class="signup-page">
     <a class="logo" routerLink="/login">
-        <img src="/icons/Logo_Start.svg" alt="Join Logo" />
+        <img src="icons/Logo_Start.svg" alt="Join Logo" />
     </a>
 
     <div class="signup-card">
         <button type="button" class="back-btn" (click)="goBack()" aria-label="Back to login">
-            <img src="/icons/arrow-left.svg" alt="" />
+            <img src="icons/arrow-left.svg" alt="" />
         </button>
 
         <div class="signup-card__header">
@@ -21,7 +21,7 @@
                     placeholder="Name"
                     [class.error]="isInvalid('name')"
                 />
-                <img class="field-icon" src="/icons/name_icon.svg" alt="" />
+                <img class="field-icon" src="icons/name_icon.svg" alt="" />
                 <span class="error-text">{{
                     isInvalid('name') ? 'Please enter your first and last name.' : ''
                 }}</span>
@@ -34,7 +34,7 @@
                     placeholder="Email"
                     [class.error]="isInvalid('email')"
                 />
-                <img class="field-icon" src="/icons/mail_icon.svg" alt="" />
+                <img class="field-icon" src="icons/mail_icon.svg" alt="" />
                 <span class="error-text">{{
                     isInvalid('email') ? 'Please enter a valid email address.' : ''
                 }}</span>
