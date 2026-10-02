@@ -1,0 +1,41 @@
+@use '../../../styles/abstracts' as *;
+@use '../../../styles/info-page' as page;
+
+@include page.layout;
+
+.legal {
+    &__content {
+        display: flex;
+        max-width: 1016px;
+        flex-direction: column;
+        gap: $spacing-lg;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+
+        &--imprint {
+            gap: $spacing-md;
+        }
+    }
+
+    &__imprint-body {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em;
+        font-size: 16px;
+    }
+
+    &__list {
+        font-size: 16px;
+        list-style: disc inside;
+    }
+
+    &__paragraphs {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em;
+        font-size: 16px;
+    }
+}

@@ -1,18 +1,29 @@
 <aside class="sidebar">
-    <a class="sidebar__logo" routerLink="/summary" aria-label="Go to summary">
+    <a
+        class="sidebar__logo"
+        [routerLink]="isLoggedIn() ? '/summary' : '/login'"
+        [attr.aria-label]="isLoggedIn() ? 'Go to summary' : 'Go to login'"
+    >
         <img src="icons/join-logo.svg" alt="Join" />
     </a>
 
     <nav class="sidebar__navigation" aria-label="Main navigation">
-        @for (item of navigationItems; track item.route) {
-            <a
-                class="sidebar__navigation-link"
-                [routerLink]="item.route"
-                routerLinkActive="sidebar__navigation-link--active"
-                ariaCurrentWhenActive="page"
-            >
-                <img [src]="'icons/' + item.icon" alt="" />
-                <span>{{ item.label }}</span>
+        @if (isLoggedIn()) {
+            @for (item of navigationItems; track item.route) {
+                <a
+                    class="sidebar__navigation-link"
+                    [routerLink]="item.route"
+                    routerLinkActive="sidebar__navigation-link--active"
+                    ariaCurrentWhenActive="page"
+                >
+                    <img [src]="'icons/' + item.icon" alt="" />
+                    <span>{{ item.label }}</span>
+                </a>
+            }
+        } @else {
+            <a class="sidebar__navigation-link" routerLink="/login">
+                <img src="icons/login.svg" alt="" />
+                <span>Log In</span>
             </a>
         }
     </nav>

@@ -1,0 +1,48 @@
+@use 'abstracts' as *;
+
+@mixin layout {
+    :host {
+        display: block;
+    }
+
+    .info-page {
+        max-width: 1152px;
+        padding: (212px - $topbar-height) 40px ($spacing-xl * 2) 96px;
+        color: #000000;
+        line-height: 1.2;
+        overflow-wrap: break-word;
+
+        @include mobile {
+            padding: $spacing-lg $spacing-md ($spacing-xl * 2);
+        }
+
+        &__title {
+            margin-bottom: 26px;
+            font-size: 61px;
+            font-weight: $font-weight-bold;
+
+            @include mobile {
+                font-size: 47px;
+            }
+        }
+
+        &__heading {
+            font-size: 27px;
+            font-weight: $font-weight-bold;
+        }
+
+        &__subheading {
+            font-size: 20px;
+            font-weight: $font-weight-bold;
+        }
+
+        &__text {
+            font-size: 16px;
+            font-weight: $font-weight-regular;
+        }
+
+        &__brand {
+            color: $color-hover;
+        }
+    }
+}

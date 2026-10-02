@@ -1,0 +1,18 @@
+@use '../../../styles/info-page' as page;
+
+@include page.layout;
+
+.privacy {
+    &__sections {
+        display: flex;
+        max-width: 1016px;
+        flex-direction: column;
+        gap: 35px;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

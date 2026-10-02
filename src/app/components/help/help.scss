@@ -1,0 +1,87 @@
+@use '../../../styles/abstracts' as *;
+@use '../../../styles/info-page' as page;
+
+@include page.layout;
+
+.help {
+    &__header {
+        display: flex;
+        max-width: 1016px;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-md;
+        margin-bottom: 26px;
+
+        .info-page__title {
+            margin-bottom: 0;
+        }
+    }
+
+    &__back {
+        display: grid;
+        width: 37px;
+        height: 37px;
+        flex-shrink: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        place-items: center;
+    }
+
+    &__content {
+        display: flex;
+        max-width: 1016px;
+        flex-direction: column;
+        gap: $spacing-lg;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    &__paragraphs {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em;
+        font-size: 16px;
+    }
+
+    &__steps {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        list-style: none;
+        counter-reset: step;
+    }
+
+    &__step {
+        display: flex;
+        align-items: flex-start;
+        gap: 35px;
+        counter-increment: step;
+
+        &::before {
+            content: counter(step) '.';
+            font-size: 27px;
+            font-weight: $font-weight-bold;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        &:last-child {
+            padding-bottom: 1.2em;
+        }
+    }
+
+    &__step-body {
+        min-width: 0;
+        flex: 1 1 0;
+
+        p + p {
+            margin-top: 1.2em;
+        }
+    }
+}
