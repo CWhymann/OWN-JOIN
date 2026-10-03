@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AddTaskOverlay } from '../add-task/add-task-overlay/add-task-overlay';
+import { BoardHeader } from './board-header/board-header';
 import { BoardTask, TaskMoveDirection, TaskMoveRequest, TaskStatus } from './board-task.model';
 import { ContactsService } from '../../core/services/contacts.service';
 import { TasksService } from '../../core/services/tasks.service';
@@ -17,7 +18,7 @@ interface BoardColumn {
 @Component({
     selector: 'app-board',
     standalone: true,
-    imports: [AddTaskOverlay, TaskCard, TaskDetail],
+    imports: [AddTaskOverlay, BoardHeader, TaskCard, TaskDetail],
     templateUrl: './board.html',
     styleUrl: './board.scss',
 })

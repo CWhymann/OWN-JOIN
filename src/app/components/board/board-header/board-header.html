@@ -1,0 +1,36 @@
+<div class="board-header">
+    <h1 id="board-title" class="board-header__title">Board</h1>
+
+    <div class="board-header__actions">
+        <label class="board-header__search">
+            <span class="board-header__search-label">Find Task</span>
+            <input
+                class="board-header__search-input"
+                type="search"
+                placeholder="Find Task (min. 3 letters)"
+                [value]="searchTerm()"
+                (input)="searchInput.emit($event)"
+            />
+            @if (searchTerm().length > 0) {
+                <button
+                    type="button"
+                    class="board-header__search-clear"
+                    (click)="searchCleared.emit()"
+                    aria-label="Clear search"
+                >
+                    ✕
+                </button>
+            }
+            <span class="board-header__search-icon" aria-hidden="true"></span>
+        </label>
+        <button
+            class="board-header__add-task"
+            type="button"
+            aria-label="Add task"
+            (click)="addTaskClicked.emit()"
+        >
+            <span class="board-header__add-task-label">Add task</span>
+            <span aria-hidden="true">+</span>
+        </button>
+    </div>
+</div>
