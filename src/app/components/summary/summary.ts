@@ -39,7 +39,7 @@ export class Summary implements OnInit {
     readonly totalTasksInBoard = computed(() => this.tasks().length);
 
     private readonly urgentTasks = computed(() =>
-        this.tasks().filter((t) => t.priority === 'urgent'),
+        this.tasks().filter((t) => t.priority === 'urgent' && t.status !== 'done'),
     );
     readonly urgentCount = computed(() => this.urgentTasks().length);
 

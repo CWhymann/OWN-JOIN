@@ -95,6 +95,7 @@ export class Board implements OnInit, OnDestroy {
         return (
             this.urgentHighlightService.highlightUrgent() &&
             task.priority === 'urgent' &&
+            task.status !== 'done' &&
             !this.settledUrgentTaskIds.has(task.id)
         );
     }
