@@ -18,6 +18,10 @@ export class AuthService {
 
     readonly isGuest = computed(() => this.userSignal()?.email === 'guest@ownjoin.de');
 
+    readonly userId = computed(() => this.userSignal()?.id ?? null);
+
+    readonly isAdmin = computed(() => this.userSignal()?.app_metadata?.['role'] === 'admin');
+
     readonly userName = computed(() => this.readName(this.userSignal()));
 
     readonly initials = computed(() => this.createInitials(this.userName()));

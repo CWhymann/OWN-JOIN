@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { BoardTask, NewTask, TaskRow } from '../../components/board/board-task.model';
+import { AuthService } from './auth.service';
 import { ContactsService } from './contacts.service';
 import { SupabaseService } from './supabase.service';
 
@@ -10,6 +11,7 @@ const TABLE = 'tasks';
 export class TasksService {
     private readonly supabase = inject(SupabaseService).client;
     private readonly contactsService = inject(ContactsService);
+    private readonly authService = inject(AuthService);
     private readonly rowsSignal = signal<TaskRow[]>([]);
     private readonly loadingSignal = signal(false);
     private readonly errorSignal = signal<string | null>(null);
@@ -89,10 +91,16 @@ export class TasksService {
             status: row.status,
             priority: row.priority,
             position: row.position,
-            isProtected: row.is_protected,
+            isProtected: !this.canEdit(row),
             assignees: this.resolveAssignees(row.assigned_to),
             subtasks: row.subtasks ?? [],
         };
+    }
+
+    /** Admins may edit everything, everyone else only their own unprotected tasks. */
+    private canEdit(row: TaskRow): boolean {
+        if (this.authService.isAdmin()) return true;
+        return row.user_id === this.authService.userId() && !row.is_protected;
     }
 
     private resolveAssignees(ids: string[] | null) {

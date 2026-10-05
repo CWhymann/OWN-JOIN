@@ -5,7 +5,7 @@
     [class.task-card--pulsing]="isPulsing"
     role="button"
     tabindex="0"
-    draggable="true"
+    [draggable]="!task.isProtected"
     (click)="selectTask($event)"
     (keydown.enter)="selectTask($event)"
     (dragstart)="startDrag($event)"

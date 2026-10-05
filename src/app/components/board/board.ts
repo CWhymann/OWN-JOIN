@@ -175,6 +175,10 @@ export class Board implements OnInit, OnDestroy {
     }
 
     protected moveFromMenu(request: TaskMoveRequest): void {
+        if (request.task.isProtected) {
+            this.taskToastService.taskNotMovable();
+            return;
+        }
         if (request.status) this.moveTask(request.task.id, request.status);
         if (request.direction) this.moveWithinColumn(request.task, request.direction);
     }
@@ -209,9 +213,11 @@ export class Board implements OnInit, OnDestroy {
 
     private async savePositions(): Promise<void> {
         await Promise.all(
-            this.tasks().map((task) =>
-                this.tasksService.updateTaskPosition(task.id, task.status, task.position),
-            ),
+            this.tasks()
+                .filter((task) => !task.isProtected)
+                .map((task) =>
+                    this.tasksService.updateTaskPosition(task.id, task.status, task.position),
+                ),
         );
     }
 

@@ -121,6 +121,10 @@ export class TaskDetail implements OnDestroy {
     }
 
     toggleSubtask(subtask: Subtask, index: number): void {
+        if (this.task()?.isProtected) {
+            this.protectedNoticeOpen.set(true);
+            return;
+        }
         subtask.done = !subtask.done;
         this.subtaskChanged.emit({ index, done: subtask.done });
     }

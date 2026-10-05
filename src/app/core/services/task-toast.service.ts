@@ -26,4 +26,8 @@ export class TaskToastService {
     taskLocked(): void {
         this.showToast("Task can't be deleted or edited");
     }
+
+    taskNotMovable(): void {
+        this.showToast('You can only move your own tasks');
+    }
 }

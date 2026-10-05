@@ -50,6 +50,7 @@ export interface TaskRow {
     assigned_to: string[] | null;
     subtasks: BoardSubtask[] | null;
     is_protected: boolean;
+    user_id: string;
 }
 
-export type NewTask = Omit<TaskRow, 'id' | 'created_at' | 'is_protected'>;
+export type NewTask = Omit<TaskRow, 'id' | 'created_at' | 'is_protected' | 'user_id'>;
